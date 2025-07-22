@@ -1,0 +1,172 @@
+.upload-container {
+  max-width: 540px;
+  margin: 40px auto;
+  padding: 36px 24px;
+  background: #ffffff; /* Changed to pure white for a cleaner look */
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.upload-container h1 {
+  text-align: center;
+  font-size: 2.5rem; /* Increased font size for better visibility */
+  font-weight: 700;
+  color: #2b2d42;
+  margin-bottom: 10px;
+}
+
+.upload-container p {
+  text-align: center;
+  color: #6c757d;
+  font-size: 1.1rem; /* Slightly larger for better readability */
+  margin-bottom: 28px;
+}
+
+.drop-area {
+  border: 2px dashed #7f9cf5;
+  border-radius: 14px;
+  background: #f1f5f9;
+  padding: 36px 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: all 0.3s;
+  position: relative; /* For positioning the icon */
+}
+
+.drop-area.dragging {
+  background: #ebf4ff;
+  border-color: #5a67d8;
+}
+
+.icon {
+  font-size: 4rem; /* Increased icon size for better visibility */
+  color: #7f9cf5;
+  margin-bottom: 14px;
+}
+
+.browse-btn {
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: #fff;
+  padding: 12px 24px; /* Increased padding for a more substantial button */
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.browse-btn:hover {
+  background: linear-gradient(to right, #5a67d8, #6b46c1);
+  transform: translateY(-2px); /* Added lift effect on hover */
+}
+
+.drop-area span {
+  display: block;
+  margin: 12px 0;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.preview {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.preview img,
+.preview video {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(66, 153, 225, 0.15);
+}
+
+.preview input[type="text"] {
+  width: 92%;
+  padding: 12px 14px; /* Increased padding for better usability */
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.preview input[type="text"]:focus {
+  border-color: #7f9cf5;
+  box-shadow: 0 0 5px rgba(127, 156, 245, 0.5); /* Added shadow on focus */
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(to right, #7f9cf5, #22d3ee);
+  color: white;
+  font-size: 1.1rem;
+  padding: 14px 0;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.submit-btn:disabled {
+  background: #cbd5e1;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.submit-btn:not(:disabled):hover {
+  background: linear-gradient(to right, #5a67d8, #0ea5e9);
+  transform: translateY(-2px); /* Added lift effect on hover */
+}
+
+.media-link {
+  text-align: center;
+  margin-top: 14px;
+  background: #edf2f7;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+.media-link p {
+  margin-bottom: 6px;
+  color: #2d3748;
+}
+
+.media-link a {
+  color: #4299e1;
+  font-weight: 500;
+  word-break: break-all;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+.media-link a:hover {
+  color: #2b6cb0; /* Darker shade on hover */
+}
+
+@media (max-width: 600px) {
+  .upload-container {
+    padding: 20px 14px;
+    max-width: 95vw;
+  }
+  .preview input[type="text"] {
+    width: 98%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
