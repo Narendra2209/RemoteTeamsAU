@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./DescriptionPage.css";
 
@@ -15,7 +15,14 @@ const DescriptionPage = () => {
     instagramCaption,
     linkedinCaption,
     description,
+    file, // Pass file if available
   } = location.state || {};
+
+  // State for editing mode and captions
+  const [isEditing, setIsEditing] = useState(false);
+  const [fbCaption, setFbCaption] = useState(facebookCaption || "");
+  const [igCaption, setIgCaption] = useState(instagramCaption || "");
+  const [liCaption, setLiCaption] = useState(linkedinCaption || "");
 
   const handlePost = async () => {
     try {
@@ -31,9 +38,9 @@ const DescriptionPage = () => {
             mediaUrl,
             mediaType,
             prompt,
-            facebookCaption,
-            instagramCaption,
-            linkedinCaption,
+            facebookCaption: fbCaption,
+            instagramCaption: igCaption,
+            linkedinCaption: liCaption,
             description,
           }),
         }
@@ -48,6 +55,27 @@ const DescriptionPage = () => {
     navigate("/"); // Go to home page
   };
 
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    setIsEditing(false);
+  };
+
+  // Regenerate: navigate to MediaUpload and pass media info
+  const handleRegenerate = () => {
+    navigate("/upload", {
+      state: {
+        mediaSrc,
+        mediaType,
+        prompt,
+        file,
+        autoUpload: true, // flag to trigger upload
+      },
+    });
+  };
+
   if (!mediaSrc && !mediaUrl) {
     return (
       <div style={{ padding: "40px", textAlign: "center" }}>
@@ -59,7 +87,14 @@ const DescriptionPage = () => {
 
   return (
     <div className="description-page">
-      <h1>Media Description</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h1>Media Description</h1>
+        {!isEditing ? (
+          <button className="edit-btn" onClick={handleEditClick}>Edit</button>
+        ) : (
+          <button className="save-btn" onClick={handleSaveClick}>Save</button>
+        )}
+      </div>
 
       {mediaType === "image" ? (
         <img
@@ -87,34 +122,59 @@ const DescriptionPage = () => {
         />
       )}
 
-      {/* <div className="prompt-info">
-        <strong>Prompt:</strong> {prompt || "No prompt provided."}
-      </div> */}
-
-      {/* <div className="description-box">
-        <strong>Description:</strong>
-        <p>{description}</p>
-      </div> */}
-
       <div className="platform-captions">
-        {facebookCaption && (
-          <p>
-            <strong>Facebook:</strong> {facebookCaption}
-          </p>
-        )}
-        {instagramCaption && (
-          <p>
-            <strong>Instagram:</strong> {instagramCaption}
-          </p>
-        )}
-        {linkedinCaption && (
-          <p>
-            <strong>LinkedIn:</strong> {linkedinCaption}
-          </p>
+        {isEditing ? (
+          <>
+            <div>
+              <strong>Facebook:</strong>
+              <input
+                type="text"
+                value={fbCaption}
+                onChange={e => setFbCaption(e.target.value)}
+                style={{ width: "80%", marginLeft: "8px" }}
+              />
+            </div>
+            <div>
+              <strong>Instagram:</strong>
+              <input
+                type="text"
+                value={igCaption}
+                onChange={e => setIgCaption(e.target.value)}
+                style={{ width: "80%", marginLeft: "8px" }}
+              />
+            </div>
+            <div>
+              <strong>LinkedIn:</strong>
+              <input
+                type="text"
+                value={liCaption}
+                onChange={e => setLiCaption(e.target.value)}
+                style={{ width: "80%", marginLeft: "8px" }}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            {fbCaption && (
+              <p>
+                <strong>Facebook:</strong> {fbCaption}
+              </p>
+            )}
+            {igCaption && (
+              <p>
+                <strong>Instagram:</strong> {igCaption}
+              </p>
+            )}
+            {liCaption && (
+              <p>
+                <strong>LinkedIn:</strong> {liCaption}
+              </p>
+            )}
+          </>
         )}
       </div>
 
-      {mediaUrl && (
+      {/* {mediaUrl && (
         <div className="media-link">
           <strong>Uploaded File Link:</strong>
           <a
@@ -126,12 +186,19 @@ const DescriptionPage = () => {
             {mediaUrl}
           </a>
         </div>
-      )}
+      )} */}
 
       <div style={{ marginTop: "24px" }}>
         <button className="upload-btn" onClick={handlePost}>
           Post
         </button>
+        {/* <button
+          className="regenerate-btn"
+          onClick={handleRegenerate}
+          style={{ marginLeft: "12px" }}
+        >
+          Regenerate
+        </button> */}
         <button
           className="cancel-btn"
           onClick={handleReject}
