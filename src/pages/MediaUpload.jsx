@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "./MediaUpload.css";
+import './MediaUpload.css';
+
 
 const MediaUpload = () => {
   const [mediaSrc, setMediaSrc] = useState(null);
@@ -9,7 +10,7 @@ const MediaUpload = () => {
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [mediaUrl, setMediaUrl] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const fileInputRef = useRef();
@@ -31,7 +32,7 @@ const MediaUpload = () => {
     setFile(selectedFile);
     setMediaSrc(url);
     setMediaType(type);
-    setMediaUrl(null); // clear old mediaUrl
+    setMediaUrl(null);
 
     log("File selected", {
       name: selectedFile.name,
@@ -113,7 +114,6 @@ const MediaUpload = () => {
 
   return (
     <div className="upload-container">
-      <h1>Remote Teams</h1>
       <p>Upload your images or videos to generate an AI-generated description</p>
 
       <div

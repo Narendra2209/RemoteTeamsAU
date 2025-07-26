@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./DescriptionPage.css";
+import "./Descriptionpage.css";
 
 const DescriptionPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  
   const {
     mediaSrc,
     mediaUrl,
@@ -85,6 +86,12 @@ const DescriptionPage = () => {
     );
   }
 
+function convertDriveUrlToPreview(driveUrl) {
+  const match = driveUrl.match(/\/d\/(.+?)\//);
+  return match ? `https://drive.google.com/file/d/${match[1]}/preview` : driveUrl;
+}
+
+
   return (
     <div className="description-page">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -95,32 +102,48 @@ const DescriptionPage = () => {
           <button className="save-btn" onClick={handleSaveClick}>Save</button>
         )}
       </div>
+      
+{mediaType === "image" ? (
+  mediaUrl.includes("drive.google.com") ? (
+    <iframe
+      src={convertDriveUrlToPreview(mediaUrl)}
+      width="320"
+      height="240"
+      style={{
+        border: "none",
+        borderRadius: "12px",
+        display: "block",
+        margin: "0 auto"
+      }}
+      allow="autoplay"
+    />
+  ) : (
+    <img
+      src={mediaUrl}
+      alt="Uploaded Media"
+      style={{
+        maxWidth: "320px",
+        maxHeight: "240px",
+        borderRadius: "12px",
+        display: "block",
+        margin: "0 auto"
+      }}
+    />
+  )
+) : (
+  <video
+    src={mediaUrl}
+    controls
+    style={{
+      maxWidth: "320px",
+      maxHeight: "240px",
+      borderRadius: "12px",
+      margin: "0 auto",
+      display: "block"
+    }}
+  />
+)}
 
-      {mediaType === "image" ? (
-        <img
-          src={mediaSrc || mediaUrl}
-          alt="Preview"
-          style={{
-            maxWidth: "320px",
-            maxHeight: "240px",
-            borderRadius: "12px",
-            margin: "0 auto",
-            display: "block",
-          }}
-        />
-      ) : (
-        <video
-          src={mediaSrc || mediaUrl}
-          controls
-          style={{
-            maxWidth: "320px",
-            maxHeight: "240px",
-            borderRadius: "12px",
-            margin: "0 auto",
-            display: "block",
-          }}
-        />
-      )}
 
       <div className="platform-captions">
         {isEditing ? (
